@@ -34,7 +34,7 @@ subject.notify('Hello observers!');
 
 // Test for Observer pattern
 
-const { Subject, Observer } = require('./observer'); // Assuming observer.js contains the implementation
+const { Subject, Observer } = require('./observer');
 
 test('Observer pattern', () => {
   const subject = new Subject();
