@@ -1,0 +1,54 @@
+class Subject {
+  constructor() {
+    this.observers = [];
+  }
+
+  subscribe(observer) {
+    this.observers.push(observer);
+  }
+
+  unsubscribe(observer) {
+    this.observers = this.observers.filter(obs => obs !== observer);
+  }
+
+  notify(data) {
+    this.observers.forEach(observer => observer.update(data));
+  }
+}
+
+class Observer {
+  update(data) {
+    console.log('Received update:', data);
+  }
+}
+
+// Example usage
+const subject = new Subject();
+const observer1 = new Observer();
+const observer2 = new Observer();
+
+subject.subscribe(observer1);
+subject.subscribe(observer2);
+
+subject.notify('Hello observers!');
+
+// Test for Observer pattern
+
+const { Subject, Observer } = require('./observer'); // Assuming observer.js contains the implementation
+
+test('Observer pattern', () => {
+  const subject = new Subject();
+  const observer1 = new Observer();
+  const observer2 = new Observer();
+
+  subject.subscribe(observer1);
+  subject.subscribe(observer2);
+
+  const mockUpdate = jest.fn();
+  observer1.update = mockUpdate;
+
+  subject.notify('Test data');
+
+  expect(mockUpdate).toHaveBeenCalledTimes(1);
+  expect(mockUpdate).toHaveBeenCalledWith('Test data');
+});
